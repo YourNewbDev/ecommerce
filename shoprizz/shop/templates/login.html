@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} Shoprizz | Sign In {% endblock  %}
+{% load static %}
+{% block content %}
+{% include "plain-navbar.html" %}
+
+{% if user.is_authenticated %}
+    <script>
+        window.location.href = "{% url "index" %}";
+    </script>
+
+{% else %}
+    <div class="d-flex justify-content-center mt-5 mb-5">
+        <form action="{% url "login" %}" method="POST" class="form-shop-login">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4 col-sm-4 col-4 text-start mt-2"><img src="{% static "image\shoprizz-F6F7EB.png" %}" class="img-fluid" alt="" width="76" height="48"></div>
+                <div class="col-md-4 col-sm-4 col-4 text-center mt-5"><h2>Sign In</h2></div>
+                <div class="col-md-4 col-sm-4 col-4 text-end mt-4"><a class="custom-link" href=""><b>Need help?</b></a></div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-3"></div>
+                    <div class="col-md-6 col-sm-6 col-6">
+                        <div class="mt-5">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Username</label>
+                                <input type="text" placeholder="Enter your username" class="form-control" name="username" aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Password</label>
+                                <input type="password" placeholder="Enter your password" class="form-control" name="password">
+                            </div>                                                    
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-shop-dark w-50 justify-content-center">Sign In</button>
+                                <p>New to Shoprizz? <a class="custom-link" href="{% url "register" %}"><b>Sign Up</b></a></p>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-md-3 col-sm-3 col-3"></div>
+            </div>
+        </form>
+    </div>
+    
+{% endif %}
+
+{% include "footer.html" %}
+{% endblock  %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Shoprizz | About {% endblock  %}
+{% block content %}
+{% include "navbar.html" %}
+<header class="py-5">
+    <div class="container text-center px-4 px-lg-5 my-5">
+        <div class="card-dark">
+            <div class="card-body">
+              <h1 class="card-title">Developer</h1>
+            </div>
+            <img src="{% static "image\harvin.jpg" %}" class="img-fluid rounded-circle w-25" alt="...">
+            <h5 class="card-text mt-3">Harvin Krist Wage</h5>
+          </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-1">
+    <div class="container px-4 px-lg-5 mb-5">
+        <div class="text-center text-dark">
+            <h1>This is my first Django App.</h1>
+        </div>
+    </div>
+</section>
+{% include "footer.html" %}
+{% endblock  %}

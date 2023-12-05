@@ -1,0 +1,73 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-shop-nav">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand me-2" href="{% url "index" %}">
+            <img src="{% static "image\shoprizz-F6F7EB.png" %}" alt="" width="95" height="50">
+        </a>
+        <form class="d-flex my-2 my-lg-0" method="get" action="{% url "search" %}">
+            {% csrf_token %}
+            {{form.query}}
+            <input class="form-control" type="text" placeholder="Search" name="query">
+            <button class="btn btn-shop-dark" type="submit">
+                <span class="">Search</span>
+            </button>
+        </form>
+        <button class="navbar-toggler d-lg-none custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "index" %}" aria-current="page">Home <span class="visually-hidden">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url "about" %}">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownId">
+                        {% for category in get_category_list  %}
+                        <a class="dropdown-item" href="{% url "category" category.name %}">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="" href="{% url "cart_summary" %}">
+                        <img src="{% static "image\cart-f6f7eb-small.png" %}" alt="">
+                        <div class="badge bg-dark text-white" style="top:0.5rem; right: 0.5rem;">
+                            <span id="cart_quantity">{{cart|length}}</span>
+                        </div>
+                    </a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "logout" %}">{{user.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "logout" %}">Sign Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "login" %}">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "register" %}">Sign Up</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% if messages %}
+        {% for message in messages  %}
+        <br>
+            <div class="container">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+{% endif %}

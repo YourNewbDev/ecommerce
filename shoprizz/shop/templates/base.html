@@ -1,0 +1,44 @@
+{% load bootstrap5 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static "custom.css" %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="{% static 'cart.js' %}"></script>
+    <title>{% block title %}Shoprizz{% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+
+    {% endblock  %}
+    <script src="{% static "custom.js" %}"></script>
+    <script>
+        $(document).on('click', '.add-cart', function(e){
+            e.preventDefault();
+            var productId = $(this).val(); // Use $(this) to reference the clicked button
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'cart_add' %}",
+                data: {
+                    product_id: productId,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(json){
+                    document.getElementById('cart_quantity').textContent = json.qty;
+                },
+                error: function(xhr, errmsg, err){
+                    // Handle errors
+                }
+            });
+        });        
+    </script>
+</body>
+</html>

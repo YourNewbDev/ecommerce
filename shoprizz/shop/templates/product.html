@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %} Shoprizz | Product {% endblock  %}
+{% load static %}
+{% block content %}
+{% include "navbar.html" %}
+
+<div class="container">
+    <div class="card mb-5 mt-5">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{product.image.url}}" class="img-fluid product-image-page" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <center>
+                    <h4 class="card-title">{{product.name}}</h4>
+                    {% if product.is_sale %}
+                    <div class="badge bg-dark text-white position-absolute" style="top:0.5rem; right: 0.5rem;">
+                        Sale
+                    </div>
+                    {% endif %}
+                    </center>
+                    <h5 class"card-text">Description:</h5>
+                    <p class="card-text">{{product.description}}</p>
+
+                    {% if product.is_sale %}
+                    <h5 class="card-text">Regular Price:</h5>
+                    <strike><p>${{product.price}}</p></strike>
+                    <h5 class="card-text">Sale Price:</h5>
+                    <strong><p>${{product.sale_price}}</p></strong>        
+                    {% else %}
+                    <h5 class="card-text">Price:</h5>
+                    <strong><p>${{product.price}}</p></strong>
+                    {% endif %}
+
+                </div>
+                <div class="card-footer mt-auto p-2">
+                    <div class="d-flex mb-3">
+                        <div class="p-2">
+                            <a name="" id="" class="btn btn-outline-dark mt-auto " href="{% url "index" %}" role="button">Buy Now</a>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-outline-dark mt-auto add-cart" type="button" value="{{product.id}}" id="add-cart">Add to Cart</button>
+                        </div>
+                        <div class="ms-auto p-2">
+                            <div class="text-end">
+                                <a name="" id="" class="btn btn-shop" href="{% url "index" %}" role="button">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
+{% endblock  %}
